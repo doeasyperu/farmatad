@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFornecedor.ViewFornecedorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_contato}"/>
+                    <h:outputText value="#{fornecedorController.selected.contato}" title="#{bundleFornecedor.ViewFornecedorTitle_contato}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_idFornecedor}"/>
+                    <h:outputText value="#{fornecedorController.selected.idFornecedor}" title="#{bundleFornecedor.ViewFornecedorTitle_idFornecedor}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_cnpj}"/>
+                    <h:outputText value="#{fornecedorController.selected.cnpj}" title="#{bundleFornecedor.ViewFornecedorTitle_cnpj}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_razaoSocial}"/>
+                    <h:outputText value="#{fornecedorController.selected.razaoSocial}" title="#{bundleFornecedor.ViewFornecedorTitle_razaoSocial}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_email}"/>
+                    <h:outputText value="#{fornecedorController.selected.email}" title="#{bundleFornecedor.ViewFornecedorTitle_email}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_nome}"/>
+                    <h:outputText value="#{fornecedorController.selected.nome}" title="#{bundleFornecedor.ViewFornecedorTitle_nome}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_telefone}"/>
+                    <h:outputText value="#{fornecedorController.selected.telefone}" title="#{bundleFornecedor.ViewFornecedorTitle_telefone}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{fornecedorController.destroyAndView}" value="#{bundleFornecedor.ViewFornecedorDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundleFornecedor.ViewFornecedorEditLink}"/>
+                <br />
+                <h:commandLink action="#{fornecedorController.prepareCreate}" value="#{bundleFornecedor.ViewFornecedorCreateLink}" />
+                <br />
+                <h:commandLink action="#{fornecedorController.prepareList}" value="#{bundleFornecedor.ViewFornecedorShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundleFornecedor.ViewFornecedorIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

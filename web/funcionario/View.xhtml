@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFuncionario.ViewFuncionarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_idFuncionario}"/>
+                    <h:outputText value="#{funcionarioController.selected.idFuncionario}" title="#{bundleFuncionario.ViewFuncionarioTitle_idFuncionario}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_endereco}"/>
+                    <h:outputText value="#{funcionarioController.selected.endereco}" title="#{bundleFuncionario.ViewFuncionarioTitle_endereco}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_entrada}"/>                    
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_senha}"/>
+                    <h:outputText value="#{funcionarioController.selected.senha}" title="#{bundleFuncionario.ViewFuncionarioTitle_senha}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_cpf}"/>
+                    <h:outputText value="#{funcionarioController.selected.cpf}" title="#{bundleFuncionario.ViewFuncionarioTitle_cpf}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_rg}"/>
+                    <h:outputText value="#{funcionarioController.selected.rg}" title="#{bundleFuncionario.ViewFuncionarioTitle_rg}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_email}"/>
+                    <h:outputText value="#{funcionarioController.selected.email}" title="#{bundleFuncionario.ViewFuncionarioTitle_email}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_nome}"/>
+                    <h:outputText value="#{funcionarioController.selected.nome}" title="#{bundleFuncionario.ViewFuncionarioTitle_nome}"/>
+                    <h:outputText value="#{bundleFuncionario.ViewFuncionarioLabel_telefone}"/>
+                    <h:outputText value="#{funcionarioController.selected.telefone}" title="#{bundleFuncionario.ViewFuncionarioTitle_telefone}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{funcionarioController.destroyAndView}" value="#{bundleFuncionario.ViewFuncionarioDestroyLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="Edit" value="#{bundleFuncionario.ViewFuncionarioEditLink}"/>
+                <br />
+                <h:commandLink action="#{funcionarioController.prepareCreate}" value="#{bundleFuncionario.ViewFuncionarioCreateLink}" />
+                <br />
+                <h:commandLink action="#{funcionarioController.prepareList}" value="#{bundleFuncionario.ViewFuncionarioShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundleFuncionario.ViewFuncionarioIndexLink}" action="/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

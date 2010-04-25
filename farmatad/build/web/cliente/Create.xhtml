@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleCliente.CreateClienteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                    <!--<h:outputLabel value="#{bundleCliente.CreateClienteLabel_idCliente}" for="idCliente" />
+                    <h:inputText id="idCliente" value="#{clienteController.selected.idCliente}" title="#{bundleCliente.CreateClienteTitle_idCliente}" />
+                    -->
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_pontos}" for="pontos" />
+                    <h:inputText id="pontos" value="#{clienteController.selected.pontos}" title="#{bundleCliente.CreateClienteTitle_pontos}" />
+
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_cpf}" for="cpf" />
+                    <h:inputText id="cpf" value="#{clienteController.selected.cpf}" title="#{bundleCliente.CreateClienteTitle_cpf}" />
+
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_rg}" for="rg" />
+                    <h:inputText id="rg" value="#{clienteController.selected.rg}" title="#{bundleCliente.CreateClienteTitle_rg}" />
+
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{clienteController.selected.email}" title="#{bundleCliente.CreateClienteTitle_email}" />
+
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{clienteController.selected.nome}" title="#{bundleCliente.CreateClienteTitle_nome}" />
+
+                    <h:outputLabel value="#{bundleCliente.CreateClienteLabel_telefone}" for="telefone" />
+                    <h:inputText id="telefone" value="#{clienteController.selected.telefone}" title="#{bundleCliente.CreateClienteTitle_telefone}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{clienteController.create}" value="#{bundleCliente.CreateClienteSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{clienteController.prepareList}" value="#{bundleCliente.CreateClienteShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundleCliente.CreateClienteIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

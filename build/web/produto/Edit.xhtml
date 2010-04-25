@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleProduto.EditProdutoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundleProduto.EditProdutoLabel_descricao}" for="descricao" />
+                    <h:inputText id="descricao" value="#{produtoController.selected.descricao}" />
+                    <h:outputLabel value="#{bundleProduto.EditProdutoLabel_laboratorio}" for="laboratorio" />
+                    <h:inputText id="laboratorio" value="#{produtoController.selected.laboratorio}" title="#{bundleProduto.EditProdutoTitle_laboratorio}" />
+                    <h:outputLabel value="#{bundleProduto.EditProdutoLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{produtoController.selected.nome}" title="#{bundleProduto.EditProdutoTitle_nome}" />
+                    <h:outputLabel value="#{bundleProduto.EditProdutoLabel_quantidade}" for="quantidade" />
+                    <h:inputText id="quantidade" value="#{produtoController.selected.quantidade}" title="#{bundleProduto.EditProdutoTitle_quantidade}" />
+                    <h:outputLabel value="#{bundleProduto.EditProdutoLabel_valorVenda}" for="valorVenda" />
+                    <h:inputText id="valorVenda" value="#{produtoController.selected.valorVenda}" title="#{bundleProduto.EditProdutoTitle_valorVenda}" />
+                </h:panelGrid>
+                <h:commandLink action="#{produtoController.update}" value="#{bundleProduto.EditProdutoSaveLink}"/>
+                <br />
+                <br />
+                <h:commandLink action="View" value="#{bundleProduto.EditProdutoViewLink}" immediate="true"/>
+                <br />
+                <h:commandLink action="#{produtoController.prepareList}" value="#{bundleProduto.EditProdutoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandLink value="#{bundleProduto.EditProdutoIndexLink}" action="/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
