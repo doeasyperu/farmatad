@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2" >
+                <h:outputLabel for="fornecedor" value="Selecione o fornecedor*:" />
+                <h:inputText id="fornecedor" required="true"/>
+
+                <h:outputLabel for="produto" value="Selecione o produto" />
+                <h:inputText id="produto" required="true"/>
+
+                <h:outputLabel for="valorCompra" value="Digite o valor de compra:" />
+                <h:inputText id="valorCompra" required="true" />
+
+                <h:outputLabel for="valorVenda" value="Digite o valor de venda" />
+                <h:inputText id="valorVenda" />
+
+                <h:commandButton value="registrar" onclick="return false;" />
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+
