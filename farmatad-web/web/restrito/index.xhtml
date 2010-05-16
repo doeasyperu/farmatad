@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Farmatads</title>
+
+    </h:head>
+    <h:body styleClass="yui-skin-sam" >
+        <p:layout fullPage="true" style="width: 100%; height: 100%;" >
+            <p:layoutUnit position="top" height="50" header="Página principal" >
+            </p:layoutUnit>
+            <p:layoutUnit position="left" width="200">
+                <h:graphicImage value="/resources/logo_farmatads.png" width="174" height="94" />
+
+            </p:layoutUnit>
+            <p:layoutUnit position="center" header="Menu">
+                <h:form>
+                    <p:panel header="Cliente" >
+                        <h:commandButton action="/restrito/cliente/List" value="#{bundlePrincipal.Cliente_Listar}"/>
+                        <h:commandButton action="#{clienteController.preparaPesquisa}" value="Pesquisar"/>
+                    </p:panel>
+                    <p:panel header="Produto" >
+                        <h:commandButton action="/restrito/produto/List" value="#{bundlePrincipal.Produto_Listar}"/>
+                        <h:commandButton action="#{produtoController.preparePesquisa}" value="Pesquisar"/>
+                    </p:panel>
+                    <p:panel header="Fornecedor">
+                        <h:commandButton action="/restrito/fornecedor/List" value="#{bundlePrincipal.Fornecedor_Listar}"/>
+                        <h:commandButton action="#{fornecedorController.preparaPesquisa}" value="Pesquisar"/>
+                    </p:panel>
+                    <p:panel header="Funcionário" rendered="#{funcionarioController.administrador}">
+                        <h:commandButton action="/restrito/funcionario/List" value="#{bundlePrincipal.Funcionario_Listar}"/>
+                        <h:commandButton action="#{funcionarioController.preparaPesquisa}" value="Pesquisar"/>
+                    </p:panel>
+                    <p:panel header="Registros de entradas" >
+                        <h:commandButton action="/restrito/Entrada" value="#{bundlePrincipal.Entrada}"/>
+                        <h:commandButton action="/restrito/Vendas" value="#{bundlePrincipal.Entrada}"/>
+                    </p:panel>
+                    <p:panel header="Sair do sistema">
+                        <p:commandButton action="#{funcionarioController.terminaSessao}" value="#{bundlePrincipal.Logout}" ajax="false"/>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

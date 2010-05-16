@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:head>
+        <title>Entrada de produtos</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <p:panel widgetVar="painelLocal" header="Entrada de produtos">
+            <p:focus for="#{p:component('valorCompra')}" />
+            <p:messages  />
+            <h:form id="formulario1">
+                <!--<h:inputHidden value="#{registrarEntrada.produto}" required="true" id="hiddenProduto"/>-->
+                <h:panelGrid columns="2" >
+                    <h:outputLabel for="produto" value="Selecione o produto" />
+                    <p:outputPanel id="outputProduto" layout="block" >
+                        <h:inputText value="#{registrarEntrada.produto.nome}" id="produto"
+                                     readonly="true" disabled="true"  required="true" requiredMessage="Preencha produto"/>
+                        <h:commandButton value="Escolher produto" onclick="dialogProduto.show();return false;" />
+                    </p:outputPanel>
+                    <h:outputLabel for="fornecedor" value="Selecione o fornecedor*:" />
+                    <p:outputPanel id="output" layout="block" >
+                        <h:inputText value="#{registrarEntrada.fornecedor.nome}" id="fornecedor"
+                                     readonly="true" disabled="true" required="true" requiredMessage="Preencha nome"/>
+                        <h:commandButton value="Escolher fornecedor" onclick="dialogFornecedor.show();return false;" />
+                    </p:outputPanel>
+
+                    <h:outputLabel for="valorCompra" value="Valor de compra:" />
+                    <h:inputText id="valorCompra" required="true" value="#{registrarEntrada.itemEntrada.valorCompra}"
+                                 maxlength="10" requiredMessage="Preencha valor de compra" />
+
+                    <h:outputLabel for="qtd" value="Quantidade:" />
+                    <h:inputText id="qtd" value="#{registrarEntrada.itemEntrada.quantidade}"
+                                 maxlength="10" required="true" requiredMessage="Preencha quantidade"/>
+
+                    <h:outputLabel for="preco_venda" value="Valor de venda" />
+                    <h:inputText id="preco_venda" value="#{registrarEntrada.produto.valorVenda}" 
+                                 maxlength="10" required="true" requiredMessage="Preencha valor de venda"/>
+                    <h:panelGroup layout="block">
+                        <h:commandButton value="Salvar" action="#{registrarEntrada.registrar}"/>
+                        <br />
+                        <h:commandButton value="Página principal" action="/restrito/index" immediate="true" />
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+
+        <p:dialog close="true" modal="true"  widgetVar="dialogFornecedor" header="Escolha o fornecedor" fixedCenter="true">
+            <h:form>
+                <h:outputLabel for="fornecedor" value="Fornecedor:" />
+                <h:inputText id="fornecedor" value="#{registrarEntrada.fornecedor.nome}" /><br />
+                <p:commandButton value="Pesquisar" action="#{registrarEntrada.pesquisarFornecedor}"
+                                 update="#{p:component('dtFor')}"/>
+            </h:form>
+            <h:form>
+                <p:dataTable value="#{registrarEntrada.listaFornecedores}" var="itemFornecedor"
+                             selection="#{registrarEntrada.fornecedor}" selectionMode="single" id="dtFor"
+                             update="formulario1:hiddenFornecedor,formulario1:fornecedor"  paginator="true"
+                             rows="5" onselectComplete="dialogFornecedor.hide();">
+                    <p:column>
+                        <h:outputText value="#{itemFornecedor.nome}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{itemFornecedor.razaoSocial}" />
+                        <p:ajax event="onclick" action="#{registrarEntrada.acao}">
+                            <f:setPropertyActionListener value="#{itemFornecedor}"
+                                                         target="#{registrarEntrada.fornecedor}"/>
+                        </p:ajax>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog close="true" modal="true"  widgetVar="dialogProduto" header="Escolha o produto" fixedCenter="true">
+            <h:form>
+                <h:outputLabel for="produto" value="Produto:"/>
+                <h:inputText id="produto" value="#{registrarEntrada.produto.nome}" /><br />
+                <p:commandButton action="#{registrarEntrada.pesquisarProduto}" update="#{p:component('dataTableProduto')}" />
+            </h:form>
+            <h:form>
+                <p:dataTable value="#{registrarEntrada.listaProdutos}" var="itemProduto" id="dataTableProduto"
+                             selection="#{registrarEntrada.produto}" selectionMode="single"
+                             update="formulario1:hiddenProduto,formulario1:produto,formulario1:preco_venda" paginator="true"
+                             rows="5" onselectComplete="dialogProduto.hide();" >
+                    <p:column>
+                        <h:outputText value="#{itemProduto.nome}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{itemProduto.laboratorio}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

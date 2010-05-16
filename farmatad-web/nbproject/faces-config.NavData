@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="prototipos/index.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="prototipos/Create.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="restrito/index.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="template.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="restrito/cliente/List.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="restrito/fornecedor/Create.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="restrito/fornecedor/Edit.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="resources/TemplatePaginas.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="restrito/funcionario/Edit.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="restrito/cliente/Edit.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="restrito/Entrada.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="prototipos/List.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="restrito/produto/View.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="restrito/logado.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="restrito/funcionario/List.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="restrito/produto/Create.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="restrito/cliente/Create.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="restrito/cliente/View.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="login.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="restrito/funcionario/View.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="restrito/produto/List.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="restrito/fornecedor/View.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="restrito/fornecedor/List.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="restrito/funcionario/Create.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="restrito/produto/Edit.xhtml" x="650" y="450" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

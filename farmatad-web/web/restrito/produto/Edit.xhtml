@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleProduto.EditProdutoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:messages globalOnly="true" />
+            <p:focus for="#{p:component('nome')}" />
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{produtoController.selected.nome}" title="#{bundleProduto.CreateProdutoTitle_nome}"
+                                 maxlength="45" required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_nome}" />
+                    <p:message for="nome" />
+
+                    <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_descricao}" for="descricao" />
+                    <h:inputText id="descricao" value="#{produtoController.selected.descricao}" title="#{bundleProduto.CreateProdutoTitle_descricao}"
+                                 maxlength="45" required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_descricao}"/>
+                    <p:message for="descricao" />
+
+                    <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_laboratorio}" for="laboratorio" />
+                    <h:inputText id="laboratorio" value="#{produtoController.selected.laboratorio}" title="#{bundleProduto.CreateProdutoTitle_laboratorio}"
+                                 maxlength="45" required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_laboratorio}"/>
+                    <p:message for="laboratorio" />
+
+                    <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_valorVenda}" for="valorVenda" />
+                    <h:inputText id="valorVenda" value="#{produtoController.selected.valorVenda}" title="#{bundleProduto.CreateProdutoTitle_valorVenda}"
+                                 maxlength="10" required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_valorVenda}">
+                        
+                    </h:inputText>
+                    <p:message for="valorVenda" />
+                </h:panelGrid>
+                <h:commandButton action="#{produtoController.update}" value="#{bundleProduto.EditProdutoSaveLink}"/>
+                <!--<br />
+                <br />-->
+                <!--<h:commandButton action="View" value="#{bundleProduto.EditProdutoViewLink}" immediate="true"/>-->
+                <br />
+                <h:commandButton action="#{produtoController.prepareList}" value="#{bundleProduto.EditProdutoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleProduto.EditProdutoIndexLink}" action="#{produtoController.paginaPrincipal}" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

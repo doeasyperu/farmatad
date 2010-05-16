@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleCliente.CreateClienteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:messages globalOnly="true" />
+            <p:message for="successInfo"  />
+            <h:form>
+                <p:focus for="#{p:component('nome')}" />
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{clienteController.selected.nome}" title="#{bundleCliente.EditClienteTitle_nome}"
+                                 maxlength="60" required="true" requiredMessage="Falta preencher o nome"/>
+                    <p:message for="nome" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_cpf}" for="cpf" />
+                    <h:inputText id="cpf" value="#{clienteController.selected.cpf}" title="#{bundleCliente.EditClienteTitle_cpf}"
+                                 maxlength="11" required="true" requiredMessage="Falta preencher o CPF"/>
+                    <p:message for="cpf" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_rg}" for="rg" />
+                    <h:inputText id="rg" value="#{clienteController.selected.rg}" title="#{bundleCliente.EditClienteTitle_rg}"
+                                 maxlength="6" required="true" requiredMessage="Falta preencher o RG"/>
+                    <p:message for="rg" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{clienteController.selected.email}" title="#{bundleCliente.EditClienteTitle_email}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o e-mail"/>
+                    <p:message for="email" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_telefone}" for="telefone" />
+                    <p:inputMask id="telefone" value="#{clienteController.selected.telefone}" title="#{bundleCliente.EditClienteTitle_telefone}"
+                                 maxlength="45" required="true" mask="(99)9999-9999" requiredMessage="Falta preencher o telefone"/>
+                    <p:message for="telefone" />
+                </h:panelGrid>
+                <br />
+                <h:commandButton action="#{clienteController.create}" value="#{bundleCliente.CreateClienteSaveLink}" />
+                <br />
+                <br />
+                <h:commandButton action="#{clienteController.prepareList}" value="#{bundleCliente.CreateClienteShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleCliente.CreateClienteIndexLink}" action="/restrito/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
