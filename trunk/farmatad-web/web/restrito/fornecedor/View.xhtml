@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFornecedor.ViewFornecedorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages />
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_idFornecedor}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.idFornecedor}" title="#{bundleFornecedor.ViewFornecedorTitle_idFornecedor}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_razaoSocial}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.razaoSocial}" title="#{bundleFornecedor.ViewFornecedorTitle_razaoSocial}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_nome}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.nome}" title="#{bundleFornecedor.ViewFornecedorTitle_nome}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_cnpj}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.cnpj}" title="#{bundleFornecedor.ViewFornecedorTitle_cnpj}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_email}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.email}" title="#{bundleFornecedor.ViewFornecedorTitle_email}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_telefone}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.telefone}" title="#{bundleFornecedor.ViewFornecedorTitle_telefone}"/>
+                    <h:outputText value="#{bundleFornecedor.ViewFornecedorLabel_contato}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{fornecedorController.selected.contato}" title="#{bundleFornecedor.ViewFornecedorTitle_contato}"/>
+                </h:panelGrid>
+                <br />
+                <p:commandButton action="#{fornecedorController.destroyAndView}" value="#{bundleFornecedor.ViewFornecedorDestroyLink}"
+                               ajax="false">
+                    <p:confirmDialog message="Deseja realmente excluir?" severity="alarm"
+                                     noLabel="Não"
+                                     yesLabel="Sim" fixedCenter="true" modal="true"
+                                     width="200px" height="150px" header="Alerta" />
+                </p:commandButton>
+                <br />
+                <br />
+                <h:commandButton action="Edit" value="#{bundleFornecedor.ViewFornecedorEditLink}"/>
+                <br />
+                <h:commandButton action="#{fornecedorController.prepareCreate}" value="#{bundleFornecedor.ViewFornecedorCreateLink}" />
+                <br />
+                <h:commandButton action="#{fornecedorController.prepareList}" value="#{bundleFornecedor.ViewFornecedorShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleFornecedor.ViewFornecedorIndexLink}" action="/restrito/index" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

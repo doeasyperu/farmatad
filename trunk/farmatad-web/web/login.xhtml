@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <p:panel header="Página de autenticação"  >
+            <p:messages globalOnly="true" />
+            <p:focus for="#{p:component('email')}" />
+            <h:form id="formularioAutenticacao">
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="email" value="#{bundlePrincipal.Login}" />
+                    <h:inputText id="email" value="#{funcionarioController.selected.email}"
+                                 required="true" requiredMessage="Falta preencher email"
+                                 maxlength="45" />
+                    <p:message for="email" />
+
+                    <h:outputLabel for="senha" value="#{bundlePrincipal.Senha}" />
+                    <h:inputSecret id="senha" value="#{funcionarioController.selected.senha}"
+                                 required="true" requiredMessage="Falta preencher senha"
+                                 maxlength="8" />
+                    <p:message for="senha" />
+                    <h:commandButton value="Autenticar" action="#{funcionarioController.validaFuncionario}" />
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>

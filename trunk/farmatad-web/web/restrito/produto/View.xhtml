@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleProduto.ViewProdutoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <p:messages />
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundleProduto.ViewProdutoLabel_nome}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{produtoController.selected.nome}" title="#{bundleProduto.ViewProdutoTitle_nome}"/>
+                    <h:outputText value="#{bundleProduto.ViewProdutoLabel_descricao}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{produtoController.selected.descricao}" title="#{bundleProduto.ViewProdutoTitle_descricao}"/>
+                    <h:outputText value="#{bundleProduto.ViewProdutoLabel_laboratorio}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{produtoController.selected.laboratorio}" title="#{bundleProduto.ViewProdutoTitle_laboratorio}"/>
+                    <h:outputText value="#{bundleProduto.ViewProdutoLabel_quantidade}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{produtoController.selected.quantidade}" title="#{bundleProduto.ViewProdutoTitle_quantidade}"/>
+                    <h:outputText value="#{bundleProduto.ViewProdutoLabel_valorVenda}"/>
+                    <h:inputText disabled="true" readonly="true" value="#{produtoController.selected.valorVenda}" title="#{bundleProduto.ViewProdutoTitle_valorVenda}"/>
+                </h:panelGrid>
+                <br />
+                <p:commandButton action="#{produtoController.destroyAndView}" value="#{bundleProduto.ViewProdutoDestroyLink}"
+                               ajax="false" >
+                    <p:confirmDialog message="Deseja realmente excluir?" severity="alarm"
+                                     noLabel="Não"
+                                     yesLabel="Sim" fixedCenter="true" modal="true"
+                                     width="200px" height="150px" header="Alerta" />
+                </p:commandButton>
+
+                <br />
+                <br />
+                <h:commandButton action="Edit" value="#{bundleProduto.ViewProdutoEditLink}"/>
+                <br />
+                <h:commandButton action="#{produtoController.prepareCreate}" value="#{bundleProduto.ViewProdutoCreateLink}" />
+                <br />
+                <h:commandButton action="#{produtoController.prepareList}" value="#{bundleProduto.ViewProdutoShowAllLink}"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleProduto.ViewProdutoIndexLink}" action="#{produtoController.paginaPrincipal}" immediate="true" />
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

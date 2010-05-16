@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFornecedor.EditFornecedorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:messages globalOnly="true" />
+            <h:form>
+                    <!--<h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_idFornecedor}" for="idFornecedor" />-->
+                <!--<h:panelGroup layout="block" style="border:1px black solid;">-->
+
+                <!--</h:panelGroup>-->
+                <p:focus for="#{p:component('razaoSocial')}" />
+                <h:inputHidden id="idFornecedor" value="#{fornecedorController.selected.idFornecedor}" />
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_razaoSocial}" for="razaoSocial" />
+                    <h:inputText id="razaoSocial" value="#{fornecedorController.selected.razaoSocial}" title="#{bundleFornecedor.EditFornecedorTitle_razaoSocial}"
+                                 maxlength="60" required="true" requiredMessage="Falta preencher a razão social"/>
+                    <p:message for="razaoSocial" />
+
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{fornecedorController.selected.nome}" title="#{bundleFornecedor.EditFornecedorTitle_nome}"
+                                 maxlength="60" required="true" requiredMessage="Falta preencher o nome"/>
+                    <p:message for="nome" />
+
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_cnpj}" for="cnpj" />
+                    <h:inputText id="cnpj" value="#{fornecedorController.selected.cnpj}" title="#{bundleFornecedor.EditFornecedorTitle_cnpj}"
+                                 maxlength="20" required="true"  requiredMessage="Falta preencher o CNPJ"/>
+                    <p:message for="cnpj" />
+
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{fornecedorController.selected.email}" title="#{bundleFornecedor.EditFornecedorTitle_email}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o e-mail"/>
+                    <p:message for="email" />
+
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_telefone}" for="telefone" />
+                    <p:inputMask mask="(99)9999-9999" id="telefone" value="#{fornecedorController.selected.telefone}" title="#{bundleFornecedor.EditFornecedorTitle_telefone}"
+                                 maxlength="15" required="true" requiredMessage="Falta preencher o telefone"/>
+                    <p:message for="telefone" />
+
+                    <h:outputLabel value="#{bundleFornecedor.EditFornecedorLabel_contato}" for="contato" />
+                    <h:inputText id="contato" value="#{fornecedorController.selected.contato}" title="#{bundleFornecedor.EditFornecedorTitle_contato}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o contato"/>
+                    <p:message for="contato" />
+                </h:panelGrid>      
+                <br />
+                <h:commandButton action="#{fornecedorController.update}" value="#{bundleFornecedor.EditFornecedorSaveLink}"/>
+                <!--<br />
+                <br />-->
+                <!--<h:commandButton action="View" value="#{bundleFornecedor.EditFornecedorViewLink}" immediate="true"/>-->
+                <br />
+                <br />
+                <h:commandButton action="#{fornecedorController.prepareList}" value="#{bundleFornecedor.EditFornecedorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleFornecedor.EditFornecedorIndexLink}" action="/restrito/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

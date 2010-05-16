@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFuncionario.EditFuncionarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:messages globalOnly="true"/>
+            <h:form id="formu1">
+                    <!--<h:outputLabel value="#{bundleFuncionario.EditFuncionarioLabel_idFuncionario}" for="idFuncionario" />-->
+                <h:inputHidden id="idFuncionario" value="#{funcionarioController.selected.idFuncionario}"  />
+                <p:focus for="#{p:component('nome')}" />
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{funcionarioController.selected.nome}" title="#{bundleFuncionario.CreateFuncionarioTitle_nome}"
+                                 maxlength="60" required="true" requiredMessage="Falta preencher o nome"/>
+                    <p:message for="nome" />
+
+
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_cpf}" for="cpf" />
+                    <h:inputText id="cpf" value="#{funcionarioController.selected.cpf}" title="#{bundleFuncionario.CreateFuncionarioTitle_cpf}"
+                                 maxlength="11" required="true" requiredMessage="Falta preencher o CPF"/>
+                    <p:message for="cpf" />
+
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_rg}" for="rg" />
+                    <h:inputText id="rg" value="#{funcionarioController.selected.rg}" title="#{bundleFuncionario.CreateFuncionarioTitle_rg}"
+                                 maxlength="6" required="true" requiredMessage="Falta preencher o RG"/>
+                    <p:message for="rg" />
+
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_endereco}" for="endereco" />
+                    <h:inputText id="endereco" value="#{funcionarioController.selected.endereco}" title="#{bundleFuncionario.CreateFuncionarioTitle_endereco}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o endereço"/>
+                    <p:message for="endereco" />
+
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{funcionarioController.selected.email}" title="#{bundleFuncionario.CreateFuncionarioTitle_email}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o e-mail"/>
+                    <p:message for="email" />
+
+                    <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_telefone}" for="telefone" />
+                    <p:inputMask id="telefone" value="#{funcionarioController.selected.telefone}" title="#{bundleFuncionario.CreateFuncionarioTitle_telefone}"
+                                 mask="(99)9999-9999" maxlength="15" required="true" requiredMessage="Falta preencher o telefone"/>
+                    <p:message for="telefone" />
+
+                    <h:panelGroup>
+                        <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_senha}" for="senha1" rendered="#{!funcionarioController.senha}"/>
+                        <h:outputLabel value="#{bundleFuncionario.CreateFuncionarioLabel_senha}" for="senha2" rendered="#{funcionarioController.senha}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" id="bloco">
+
+                        <h:inputSecret id="senha1" value="#{!funcionarioController.selected.senha}" title="#{bundleFuncionario.CreateFuncionarioTitle_senha}"
+                                       readonly="true" disabled="true" rendered="#{!funcionarioController.senha}"
+                                       maxlength="8" required="true" requiredMessage="Falta preencher a senha"/>
+                        <h:inputSecret id="senha2" value="#{funcionarioController.selected.senha}" title="#{bundleFuncionario.CreateFuncionarioTitle_senha}"
+                                       rendered="#{funcionarioController.senha}"
+                                       maxlength="8" required="true" requiredMessage="Falta preencher a senha"/>
+                        <p:commandButton value="Alterar senha" update="formu1:bloco" action="#{funcionarioController.acao}">
+                            <f:setPropertyActionListener target="#{funcionarioController.senha}" value="true" />
+                        </p:commandButton>
+
+                    </h:panelGroup>
+                    <p:message for="senha1" rendered="#{!funcionarioController.senha}"/>
+                    <p:message for="senha2" rendered="#{funcionarioController.senha}"/>
+                    <h:outputLabel value="É administrador ?:" for="administrador" />
+                    <h:selectOneMenu value="#{funcionarioController.selected.adminstrador}" id="administrador" >
+                        <f:selectItem itemLabel="Não" itemValue="false" />
+                        <f:selectItem itemLabel="Sim" itemValue="true" />
+                    </h:selectOneMenu>
+
+
+                </h:panelGrid>
+                <h:commandButton action="#{funcionarioController.update}" value="#{bundleFuncionario.EditFuncionarioSaveLink}"/>
+                <!--<br />
+                <br />
+                <h:commandButton action="View" value="#{bundleFuncionario.EditFuncionarioViewLink}" immediate="true"/>-->
+                <br />
+                <h:commandButton action="#{funcionarioController.prepareList}" value="#{bundleFuncionario.EditFuncionarioShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleFuncionario.EditFuncionarioIndexLink}" action="/restrito/index" immediate="true" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

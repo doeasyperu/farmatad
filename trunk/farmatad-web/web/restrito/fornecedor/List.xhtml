@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundleFornecedor.ListFornecedorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <p:messages />
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundleFornecedor.ListFornecedorEmpty}" rendered="#{fornecedorController.listaFornecedor == null}"/>
+                <h:panelGroup rendered="#{fornecedorController.listaFornecedor != null}">
+                    <p:dataTable value="#{fornecedorController.listaFornecedor}" var="item" rows="10"
+                                 paginator="true"
+                                 firstPageLinkLabel="#{bundlePrincipal.Primeiro}"
+                                 lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
+                                 nextPageLinkLabel="#{bundlePrincipal.Proximo}"
+                                 previousPageLinkLabel="#{bundlePrincipal.Anterior}"
+                                 emptyMessage="Sem itens encontrados">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_razaoSocial}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.razaoSocial}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_nome}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nome}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_cnpj}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cnpj}"/>
+                        </p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_email}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_telefone}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefone}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleFornecedor.ListFornecedorTitle_contato}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.contato}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandButton action="#{fornecedorController.prepareView}" value="#{bundleFornecedor.ListFornecedorViewLink}">
+                                <f:setPropertyActionListener target="#{fornecedorController.selected}" value="#{item}" />
+                            </h:commandButton>
+                            <h:outputText value=" "/>
+                            <h:commandButton action="#{fornecedorController.prepareEdit}" value="#{bundleFornecedor.ListFornecedorEditLink}">
+                                <f:setPropertyActionListener target="#{fornecedorController.selected}" value="#{item}" />
+                            </h:commandButton>
+                            <h:outputText value=" "/>
+                            <p:commandButton value="#{bundleFornecedor.ListFornecedorDestroyLink}" onclick="dialogo.show();">
+                                <f:setPropertyActionListener target="#{fornecedorController.selected}" value="#{item}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandButton action="#{fornecedorController.prepareCreate}" value="#{bundleFornecedor.ListFornecedorCreateLink}"/>
+                <br />
+                <br />
+                <h:commandButton value="#{bundleFornecedor.ListFornecedorIndexLink}" action="/restrito/index" immediate="true" />
+            </h:form>
+            <p:dialog widgetVar="dialogo" fixedCenter="true" height="150px"
+                      width="250px" modal="true" visible="block" id="diagConfirmacao"
+                      header="Deseja excluir este item?">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="SIM" action="#{fornecedorController.destroy}" ajax="false" oncomplete="dialogo.hide();"/>
+                        <h:commandButton value="NÃO" onclick="dialogo.hide(); return false;" />
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+
+</html>

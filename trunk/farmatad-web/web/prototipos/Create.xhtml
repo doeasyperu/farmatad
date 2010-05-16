@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:head>
+        <title>Teste com o primefaces</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+
+        <p:panel header="Página com primefaces" >
+            <p:messages />
+            <br/>
+            
+            <h:form>
+                <h:panelGroup layout="block" >
+
+                    <h:commandButton action="#{produtoController.create}" value="#{bundleProduto.CreateProdutoSaveLink}" />
+                    <h:commandButton action="#{produtoController.prepareList}" value="#{bundleProduto.CreateProdutoShowAllLink}" immediate="true"/>
+                    <h:commandButton value="#{bundleProduto.CreateProdutoIndexLink}" action="/index" immediate="true" />
+                </h:panelGroup>
+                <!--</h:form>-->
+                <p:tabView >
+                    <p:tab title="Cadastro de produtos" >
+                        <!--<h:form>-->
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_descricao}" for="descricao" />
+                                <h:inputText id="descricao" value="#{produtoController.selected.descricao}" title="#{bundleProduto.CreateProdutoTitle_descricao}"
+                                             required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_descricao}"/>
+                                <p:message for="descricao" />
+
+                                <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_laboratorio}" for="laboratorio" />
+                                <h:inputText id="laboratorio" value="#{produtoController.selected.laboratorio}" title="#{bundleProduto.CreateProdutoTitle_laboratorio}"
+                                             required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_laboratorio}"/>
+                                <p:message for="laboratorio" />
+
+                                <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_nome}" for="nome" />
+                                <h:inputText id="nome" value="#{produtoController.selected.nome}" title="#{bundleProduto.CreateProdutoTitle_nome}"
+                                             required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_nome}" />
+                                <p:message for="nome" />
+
+                                <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_quantidade}" for="quantidade" />
+                                <h:inputText id="quantidade" value="#{produtoController.selected.quantidade}" title="#{bundleProduto.CreateProdutoTitle_quantidade}"
+                                             required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_quantidade}"/>
+                                <p:message for="quantidade" />
+
+                                <h:outputLabel value="#{bundleProduto.CreateProdutoLabel_valorVenda}" for="valorVenda" />
+                                <h:inputText id="valorVenda" value="#{produtoController.selected.valorVenda}" title="#{bundleProduto.CreateProdutoTitle_valorVenda}"
+                                             required="true" requiredMessage="#{bundleProduto.CreateProdutoRequired_valorVenda}"/>
+                                <p:message for="valorVenda" />
+                            </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </p:panel>
+
+    </h:body>
+
+
+
+
+</html>
+

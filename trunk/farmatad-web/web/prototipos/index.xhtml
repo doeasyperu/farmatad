@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    <h:head>
+        <title>Página principal</title>
+    </h:head>
+    <h:body >
+        <h:form>
+            <p:breadCrumb >
+                <p:menuitem value="Prinipal"></p:menuitem>
+            </p:breadCrumb>
+        </h:form>
+        <p:panel header="Módulos" style="height: 100%; width: 100%">
+            <h:panelGroup layout="block" style="position: relative; display: table;height: 100%; width: 100%">
+                <h:panelGroup layout="block" style="position: relative; display: table-row;height: 100%; width: 100%">
+                    <h:panelGroup layout="block" style="position: relative; display: table-cell;width: 300px; height: 100%;">
+                        <h:form>
+                            <p:menu >
+                                <p:submenu>
+                                    <p:menuitem value="Produtos" />
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" style="width: 10px;">
+                        
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" style="position: relative; display: table-cell;height: 100%; width: 100%;">
+                        <p:panel header="Produtos" style="height: 100%; width: 100%">
+                            <h:form>
+                                <p:commandLink value="produtos" />
+                            </h:form>
+                        </p:panel>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </p:panel>
+    </h:body>
+</html>
+

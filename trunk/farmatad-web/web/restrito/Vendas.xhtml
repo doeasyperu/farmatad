@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formVendas">
+            <h:panelGrid columns="4" >
+                <h:outputLabel for="clientessel" value="Cliente:" />
+                <h:inputText id="clientessel" readonly="true" disabled="true" value="#{registrarVenda.cliente.nome}"/>
+                <h:commandButton value="buscar cliente" type="button" onclick="dialogoCliente.show();return false;" />
+                <p:message id="mensagensErro1" for="formVendas:clientessel"/>
+
+                <h:outputText id="produtosel" value="Produto:" />
+                <h:commandButton value="buscar produto" type="button" onclick="dialogProduto.show();" />
+                <p:message id="mensagensErro2" for="formVendas:produtosel"/>
+                <!-- -->
+
+                <h:outputLabel for="formaPagto" value="Forma de pagamento:" />
+                <h:inputText id="formaPagto" value="#{registrarVenda.venda.formPagto}" maxlength="45"
+                             required="true" requiredMessage="Preencha forma de pagamento"/>
+                <p:message id="mensagensErro3" for="formVendas:formaPagto"/>
+                <!-- -->
+
+                <h:outputText value="Total:" />
+                <h:inputText id="total" value="#{registrarVenda.total}" readonly="true"/>
+                <h:commandButton value="registrar Venda" action="#{registrarVenda.registrarVenda}" />
+
+            </h:panelGrid>
+        </h:form>
+        <h:form>
+            <p:dataTable value="#{registrarVenda.listaCompras}" var="itemProduto" rows="10" id="TblProduto"
+                         paginator="true" firstPageLinkLabel="#{bundlePrincipal.Primeiro}"
+                         lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
+                         nextPageLinkLabel="#{bundlePrincipal.Proximo}"
+                         previousPageLinkLabel="#{bundlePrincipal.Anterior}"
+                         emptyMessage="Sem itens encontrados">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleProduto.ListProdutoTitle_nome}"/>
+                    </f:facet>
+                    <h:outputText value="#{itemProduto.nome}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleProduto.ListProdutoTitle_descricao}"/>
+                    </f:facet>
+                    <h:outputText value="#{itemProduto.descricao}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleProduto.ListProdutoTitle_laboratorio}"/>
+                    </f:facet>
+                    <h:outputText value="#{itemProduto.laboratorio}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleProduto.ListProdutoTitle_quantidade}"/>
+                    </f:facet>
+                    <h:outputText value="#{itemProduto.quantidade}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{bundleProduto.ListProdutoTitle_valorVenda}"/>
+                    </f:facet>
+                    <h:outputText value="#{itemProduto.valorVenda}" >
+                        <f:converter converterId="javax.faces.Double" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="&nbsp;"/>
+                    </f:facet>
+                    <p:commandButton value="#{bundleProduto.ListProdutoDestroyLink}" onclick="dialogo.show();"
+                                     type="button">
+                        <f:setPropertyActionListener target="#{registrarVenda.produto}" value="#{itemProduto}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog widgetVar="dialogo" fixedCenter="true" height="150px"
+                  width="250px" modal="true" visible="block" id="diagConfirmacao"
+                  header="Deseja excluir este item?">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="SIM" action="#{registrarVenda.removerProduto}" ajax="false"
+                                     oncomplete="dialogo.hide();" update="#{p:component('TblProduto')}" />
+                    <h:commandButton value="NÃO" onclick="dialogo.hide(); return false;" />
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        <p:dialog close="true" modal="true"  widgetVar="dialogProduto" header="Escolha o produto" fixedCenter="true">
+            <h:form>
+                <h:outputLabel for="produto" value="Produto:"/>
+                <h:inputText id="produto" value="#{registrarEntrada.produto.nome}" /><br />
+                <p:commandButton action="#{registrarEntrada.pesquisarProduto}" update="#{p:component('dataTableProduto')}" />
+            </h:form>
+            <h:form>
+                <p:dataTable value="#{registrarVenda.listaProdutos}" var="itemProduto" id="dataTableProduto"
+                             selectionMode="single" paginator="true"
+                             rows="5"  >
+                    <p:column>
+                        <h:outputText value="#{itemProduto.nome}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{itemProduto.laboratorio}" />
+                    </p:column>
+                    <p:column>
+                        <h:inputText value="#{itemProduto.quantidade}" />
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{itemProduto.valorVenda}" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Adicionar" action="#{registrarVenda.adicionarProduto}"
+                                         update="formVendas:total,#{p:component('TblProduto')}" ajax="true" oncomplete="dialogProduto.hide();">
+
+                            <f:setPropertyActionListener target="#{registrarVenda.produto}" value="#{itemProduto}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="dialogoCliente" fixedCenter="true" modal="true"
+                  header="Pesquisar clientes cadastrados">
+            <h:form>
+                <h:outputLabel for="nomeCliente" value="Cliente:" />
+                <h:inputText maxlength="45" value="#{registrarVenda.cliente.nome}" />
+                <br />
+                <p:commandButton action="#{registrarVenda.pesquisaClientes}" update="#{p:component('tblClientes')}"
+                                 value="Pesquisar" />
+                <p:commandButton value="Cadastrar" onclick="dialogCdsCliente.show();return false" />
+            </h:form>
+            <h:form>
+                <p:dataTable rows="10" value="#{registrarVenda.listaCliente}" var="itemCliente"
+                             paginator="true" firstPageLinkLabel="#{bundlePrincipal.Primeiro}" id="tblClientes"
+                             lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
+                             nextPageLinkLabel="#{bundlePrincipal.Proximo}"
+                             previousPageLinkLabel="#{bundlePrincipal.Anterior}"
+                             emptyMessage="Sem itens encontrados">
+
+                    <p:column>
+                        <f:facet name="header" >Nome</f:facet>
+                        <h:outputText value="#{itemCliente.nome}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header" > </f:facet>
+                        <p:commandButton value="Escolher" update="#{p:component('clientessel')}" onclick="dialogoCliente.hide();">
+                            <f:setPropertyActionListener target="#{registrarVenda.cliente}" value="#{itemCliente}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="dialogCdsCliente" modal="true">
+            <h:form>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{registrarVenda.cliente.nome}" title="#{bundleCliente.EditClienteTitle_nome}"
+                                 maxlength="60" required="true" requiredMessage="Falta preencher o nome"/>
+                    <p:message for="nome" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_cpf}" for="cpf" />
+                    <h:inputText id="cpf" value="#{registrarVenda.cliente.cpf}" title="#{bundleCliente.EditClienteTitle_cpf}"
+                                 maxlength="11" required="true" requiredMessage="Falta preencher o CPF"/>
+                    <p:message for="cpf" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_rg}" for="rg" />
+                    <h:inputText id="rg" value="#{registrarVenda.cliente.rg}" title="#{bundleCliente.EditClienteTitle_rg}"
+                                 maxlength="6" required="true" requiredMessage="Falta preencher o RG"/>
+                    <p:message for="rg" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{registrarVenda.cliente.email}" title="#{bundleCliente.EditClienteTitle_email}"
+                                 maxlength="45" required="true" requiredMessage="Falta preencher o e-mail"/>
+                    <p:message for="email" />
+
+                    <h:outputLabel value="#{bundleCliente.EditClienteLabel_telefone}" for="telefone" />
+                    <p:inputMask id="telefone" value="#{registrarVenda.cliente.telefone}" title="#{bundleCliente.EditClienteTitle_telefone}"
+                                 maxlength="45" required="true" mask="(99)9999-9999" requiredMessage="Falta preencher o telefone"/>
+                    <p:message for="telefone" />
+                    <p:commandButton action="#{registrarVenda.cadastrarCliente}" oncomplete="dialogCdsCliente.hide()" update="#{p:component('tblClientes')}"/>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
