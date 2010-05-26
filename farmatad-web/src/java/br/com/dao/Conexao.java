@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author marcio
  */
-@javax.inject.Singleton
+//@javax.inject.Singleton
 public class Conexao {
 
     private Connection connection;
