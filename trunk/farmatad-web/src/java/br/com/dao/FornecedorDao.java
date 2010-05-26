@@ -20,7 +20,6 @@ import javax.validation.ConstraintViolationException;
 public class FornecedorDao extends Dao {
 
     private Fornecedor fornecedor;
-    private PessoaDao pessoaDao;
 
     public Fornecedor getFornecedor() {
         return fornecedor;

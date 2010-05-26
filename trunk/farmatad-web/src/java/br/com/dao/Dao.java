@@ -8,7 +8,6 @@ package br.com.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
-import javax.inject.Inject;
 
 /**
  *
@@ -19,8 +18,8 @@ public abstract class Dao {
     private String sql;
     private ResultSet resultSet;
     private PreparedStatement preparedStatement;
-    @Inject
-    private Conexao conexao;
+    
+    private Conexao conexao = Conexao.getInstance();
 
     public PreparedStatement getPreparedStatement() {
         return preparedStatement;

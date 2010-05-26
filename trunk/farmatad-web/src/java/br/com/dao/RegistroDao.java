@@ -20,7 +20,7 @@ import javax.inject.Inject;
  *
  * @author marcio
  */
-@Stateless
+//@Stateless
 public class RegistroDao {
 
     private Conexao conexao = Conexao.getInstance();
