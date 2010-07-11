@@ -146,10 +146,9 @@ public class ProdutoDao extends Dao {
         List<Produto> lista = new ArrayList<Produto>();
         try {
             setSql("select p.idproduto, p.nome, p.descricao, p.laboratorio, p.quantidade, "
-                    + "p.valor_venda from produto p where ativo = 1 and (lower(p.nome) like ? or lower(p.nome) like ?)");
+                    + "p.valor_venda from produto p where ativo = 1 and (lower(p.nome) like ?)");
             setPreparedStatement(getConexao().getConnection().prepareCall(getSql()));
             getPreparedStatement().setString(1, "%" + getProduto().getNome().toLowerCase() + "%");
-            getPreparedStatement().setString(2, "%" + getProduto().getNome().toUpperCase() + "%");
             setResultSet(getPreparedStatement().executeQuery());
             if (getResultSet() != null) {
                 while (getResultSet().next()) {

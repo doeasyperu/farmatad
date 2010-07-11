@@ -10,83 +10,100 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>TODO supply a title</title>
+        <title>Vendas</title>
+        <script type="text/javascript">
+            var input;
+            function verificar(obj, qtd){
+                if (jQuery(obj).val() >= qtd){
+                    erroQtd.show();
+                    jQuery(obj).val('');
+                    input = obj;
+                }
+            }
+        </script>
     </h:head>
     <h:body>
-        <h:form id="formVendas">
-            <h:panelGrid columns="4" >
-                <h:outputLabel for="clientessel" value="Cliente:" />
-                <h:inputText id="clientessel" readonly="true" disabled="true" value="#{registrarVenda.cliente.nome}"/>
-                <h:commandButton value="buscar cliente" type="button" onclick="dialogoCliente.show();return false;" />
-                <p:message id="mensagensErro1" for="formVendas:clientessel"/>
+        <p:dialog widgetVar="erroQtd" close="true" modal="true" fixedCenter="true"
+                  >
+            <h:outputText value="Digite um valor menor ou igual a quantidade, seu asno!"
+                          />
+        </p:dialog>
+        <h:panelGroup layout="block" id="conteiner">
+            <h:form id="formVendas">
+                <h:panelGrid columns="4" >
+                    <h:outputLabel for="clientessel" value="Cliente:" />
+                    <h:inputText id="clientessel" readonly="true" disabled="true" value="#{registrarVenda.cliente.nome}"/>
+                    <h:commandButton value="buscar cliente" type="button" onclick="dialogoCliente.show();return false;" />
+                    <p:message id="mensagensErro1" for="formVendas:clientessel"/>
 
-                <h:outputText id="produtosel" value="Produto:" />
-                <h:commandButton value="buscar produto" type="button" onclick="dialogProduto.show();" />
-                <p:message id="mensagensErro2" for="formVendas:produtosel"/>
-                <!-- -->
+                    <h:outputText id="produtosel" value="Produto:" />
+                    <h:commandButton value="buscar produto" type="button" onclick="dialogProduto.show();" />
+                    <p:message id="mensagensErro2" for="formVendas:produtosel"/>
+                    <!-- -->
 
-                <h:outputLabel for="formaPagto" value="Forma de pagamento:" />
-                <h:inputText id="formaPagto" value="#{registrarVenda.venda.formPagto}" maxlength="45"
-                             required="true" requiredMessage="Preencha forma de pagamento"/>
-                <p:message id="mensagensErro3" for="formVendas:formaPagto"/>
-                <!-- -->
+                    <h:outputLabel for="formaPagto" value="Forma de pagamento:" />
+                    <h:inputText id="formaPagto" value="#{registrarVenda.venda.formPagto}" maxlength="45"
+                                 required="true" requiredMessage="Preencha forma de pagamento"/>
+                    <p:message id="mensagensErro3" for="formVendas:formaPagto"/>
+                    <!-- -->
 
-                <h:outputText value="Total:" />
-                <h:inputText id="total" value="#{registrarVenda.total}" readonly="true"/>
-                <h:commandButton value="registrar Venda" action="#{registrarVenda.registrarVenda}" />
+                    <h:outputText value="Total:" />
+                    <h:inputText id="total" value="#{registrarVenda.total}" readonly="true"/>
+                    <h:commandButton value="registrar Venda" action="#{registrarVenda.registrarVenda}" />
 
-            </h:panelGrid>
-        </h:form>
-        <h:form>
-            <p:dataTable value="#{registrarVenda.listaCompras}" var="itemProduto" rows="10" id="TblProduto"
-                         paginator="true" firstPageLinkLabel="#{bundlePrincipal.Primeiro}"
-                         lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
-                         nextPageLinkLabel="#{bundlePrincipal.Proximo}"
-                         previousPageLinkLabel="#{bundlePrincipal.Anterior}"
-                         emptyMessage="Sem itens encontrados">
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleProduto.ListProdutoTitle_nome}"/>
-                    </f:facet>
-                    <h:outputText value="#{itemProduto.nome}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleProduto.ListProdutoTitle_descricao}"/>
-                    </f:facet>
-                    <h:outputText value="#{itemProduto.descricao}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleProduto.ListProdutoTitle_laboratorio}"/>
-                    </f:facet>
-                    <h:outputText value="#{itemProduto.laboratorio}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleProduto.ListProdutoTitle_quantidade}"/>
-                    </f:facet>
-                    <h:outputText value="#{itemProduto.quantidade}"/>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{bundleProduto.ListProdutoTitle_valorVenda}"/>
-                    </f:facet>
-                    <h:outputText value="#{itemProduto.valorVenda}" >
-                        <f:converter converterId="javax.faces.Double" />
-                    </h:outputText>
-                </p:column>
-                <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="&nbsp;"/>
-                    </f:facet>
-                    <p:commandButton value="#{bundleProduto.ListProdutoDestroyLink}" onclick="dialogo.show();"
-                                     type="button">
-                        <f:setPropertyActionListener target="#{registrarVenda.produto}" value="#{itemProduto}" />
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+                </h:panelGrid>
+            </h:form>
+            <h:form>
+                <p:dataTable value="#{registrarVenda.listaCompras}" var="itemProduto" rows="10" id="TblProduto"
+                             paginator="true" firstPageLinkLabel="#{bundlePrincipal.Primeiro}"
+                             lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
+                             nextPageLinkLabel="#{bundlePrincipal.Proximo}"
+                             previousPageLinkLabel="#{bundlePrincipal.Anterior}"
+                             emptyMessage="Sem itens encontrados">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundleProduto.ListProdutoTitle_nome}"/>
+                        </f:facet>
+                        <h:outputText value="#{itemProduto.nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundleProduto.ListProdutoTitle_descricao}"/>
+                        </f:facet>
+                        <h:outputText value="#{itemProduto.descricao}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundleProduto.ListProdutoTitle_laboratorio}"/>
+                        </f:facet>
+                        <h:outputText value="#{itemProduto.laboratorio}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundleProduto.ListProdutoTitle_quantidade}"/>
+                        </f:facet>
+                        <h:outputText value="#{itemProduto.quantidade}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundleProduto.ListProdutoTitle_valorVenda}"/>
+                        </f:facet>
+                        <h:outputText value="#{itemProduto.valorVenda}" >
+                            <f:converter converterId="javax.faces.Double" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <p:commandButton value="#{bundleProduto.ListProdutoDestroyLink}" onclick="dialogo.show();"
+                                         type="button">
+                            <f:setPropertyActionListener target="#{registrarVenda.produto}" value="#{itemProduto}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </h:panelGroup>
         <p:dialog widgetVar="dialogo" fixedCenter="true" height="150px"
                   width="250px" modal="true" visible="block" id="diagConfirmacao"
                   header="Deseja excluir este item?">
@@ -98,31 +115,42 @@ and open the template in the editor.
                 </h:panelGrid>
             </h:form>
         </p:dialog>
-        <p:dialog close="true" modal="true"  widgetVar="dialogProduto" header="Escolha o produto" fixedCenter="true">
+        <p:dialog close="true" modal="true"  widgetVar="dialogProduto" 
+                  header="Escolha o produto" fixedCenter="true"
+                  id="dialogoProduto">
             <h:form>
                 <h:outputLabel for="produto" value="Produto:"/>
-                <h:inputText id="produto" value="#{registrarEntrada.produto.nome}" /><br />
-                <p:commandButton action="#{registrarEntrada.pesquisarProduto}" update="#{p:component('dataTableProduto')}" />
+                <h:inputText id="produto" value="#{registrarVenda.produto.nome}" /><br />
+                <p:commandButton action="#{registrarVenda.pesquisarProdutos}" update="#{p:component('dataTableProduto')}" />
             </h:form>
             <h:form>
                 <p:dataTable value="#{registrarVenda.listaProdutos}" var="itemProduto" id="dataTableProduto"
                              selectionMode="single" paginator="true"
                              rows="5"  >
                     <p:column>
+                        <f:facet name="header">Nome</f:facet>
                         <h:outputText value="#{itemProduto.nome}" />
                     </p:column>
                     <p:column>
+                        <f:facet name="header">Laboratório</f:facet>
                         <h:outputText value="#{itemProduto.laboratorio}" />
                     </p:column>
                     <p:column>
-                        <h:inputText value="#{itemProduto.quantidade}" />
+                        <f:facet name="header" >Qtd</f:facet>
+                        <h:outputText value="#{itemProduto.quantidade}" />
                     </p:column>
                     <p:column>
+                        <f:facet name="header">Qtd vendida</f:facet>
+                        <h:inputText value="#{itemProduto.quantidade}"
+                                     onkeyup="verificar(this, #{itemProduto.quantidade})" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Valor und</f:facet>
                         <h:outputText value="#{itemProduto.valorVenda}" />
                     </p:column>
                     <p:column>
                         <p:commandButton value="Adicionar" action="#{registrarVenda.adicionarProduto}"
-                                         update="formVendas:total,#{p:component('TblProduto')}" ajax="true" oncomplete="dialogProduto.hide();">
+                                         update="conteiner" ajax="true" oncomplete="dialogProduto.hide();">
 
                             <f:setPropertyActionListener target="#{registrarVenda.produto}" value="#{itemProduto}" />
                         </p:commandButton>
@@ -194,5 +222,6 @@ and open the template in the editor.
                 </h:panelGrid>
             </h:form>
         </p:dialog>
+
     </h:body>
 </html>

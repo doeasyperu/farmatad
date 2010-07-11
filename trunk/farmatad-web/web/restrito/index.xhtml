@@ -36,7 +36,10 @@
                     </p:panel>
                     <p:panel header="Registros de entradas" >
                         <h:commandButton action="/restrito/Entrada" value="#{bundlePrincipal.Entrada}"/>
-                        <h:commandButton action="/restrito/Vendas" value="#{bundlePrincipal.Entrada}"/>
+                        <h:commandButton action="/restrito/Vendas" value="Vendas"/>
+                    </p:panel>
+                    <p:panel header="Relatório" >
+                        <h:commandButton action="#{RelatorioController.gerarRelatorio}" value="Relatório"/>
                     </p:panel>
                     <p:panel header="Sair do sistema">
                         <p:commandButton action="#{funcionarioController.terminaSessao}" value="#{bundlePrincipal.Logout}" ajax="false"/>

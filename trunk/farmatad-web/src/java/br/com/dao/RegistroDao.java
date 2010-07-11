@@ -20,7 +20,7 @@ import javax.inject.Inject;
  *
  * @author marcio
  */
-//@Stateless
+@Stateless
 public class RegistroDao {
 
     private Conexao conexao = Conexao.getInstance();
@@ -115,13 +115,19 @@ public class RegistroDao {
                 p.setQuantidade(p.getQuantidade() - iv.getProduto().getQuantidade());
                 getProdutoDao().setProduto(p);
                 getProdutoDao().update();
+
             }
+            ClienteDao clienteDao = new ClienteDao();
+            clienteDao.setCliente(venda.getCliente());
+            clienteDao.update();
+
+            return 1;
 
         } catch (SQLException ex) {
             Logger.getLogger(RegistroDao.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
-        return -3;
+        // return -3;
     }
 
     public ItemEntrada getItemEntrada() {
