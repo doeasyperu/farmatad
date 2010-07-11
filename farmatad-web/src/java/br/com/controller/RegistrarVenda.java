@@ -21,7 +21,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.primefaces.component.resource.Resource;
 
 /**
  *
@@ -160,7 +159,7 @@ public class RegistrarVenda implements Serializable {
         Produto p1 = getEjbProduto().find(produto.getIdProduto());
         FacesContext fc = FacesContext.getCurrentInstance();
         String sumario = "Quantidade insuficiente em estoque";
-        String mensagem = "";
+        String mensagem = "Quantidade insuficiente em estoque";
         if (p1.getQuantidade() == 0) {
             mensagem = "Não tem o produto em estoque";
 
@@ -170,17 +169,12 @@ public class RegistrarVenda implements Serializable {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, sumario, mensagem);
         if (p1.getQuantidade() < produto.getQuantidade() || p1.getQuantidade() == 0) {
             fc.addMessage("formVendas:produtosel", fm);
-
             return null;
         } else if (p1.getQuantidade() >= produto.getQuantidade() && p1.getQuantidade() > 0) {
             for (int index = 0; index < listaCompras.size(); index++) {
                 Produto p = new Produto();
                 p = listaCompras.get(index);
                 if (p.getIdProduto() == produto.getIdProduto()) {
-                    System.out.println("Já existe na lista");
-                    System.out.println("Quantidades p " + p.getQuantidade());
-                    System.out.println("Quantidades produto " + produto.getQuantidade());
-                    System.out.println("Quantidades somadas " + (p.getQuantidade() + produto.getQuantidade()));
                     if (p1.getQuantidade() < (p.getQuantidade() + produto.getQuantidade())) {
                         fc.addMessage("formVendas:produtosel", fm);
                     } else if (p1.getQuantidade() >= (p.getQuantidade() + produto.getQuantidade())) {
@@ -236,14 +230,17 @@ public class RegistrarVenda implements Serializable {
         HttpSession hs = (HttpSession) fc.getExternalContext().getSession(true);
         final Funcionario f = (Funcionario) hs.getAttribute("funcionario");
         if (cliente.getIdCliente() == -1) {
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha cliente", "Escolha cliente");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Escolha cliente", "Escolha cliente");
             fc.addMessage("formVendas:clientessel", m);
             return null;
         } else if (listaCompras.size() <= 0) {
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escolha produto", "Escolha produto");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Escolha produto", "Escolha produto");
             fc.addMessage("formVendas:clientessel", m);
             return null;
         } else {
+            Double pontos = Math.ceil(total/ 10);
             List<ItemVenda> listaItens = new ArrayList<ItemVenda>();
             for (Produto p : listaCompras) {
                 ItemVenda iv = new ItemVenda();
@@ -254,9 +251,12 @@ public class RegistrarVenda implements Serializable {
             venda.setFuncionario(f);
             if (cliente.getPontos() > 10) {
                 venda.setDesconto(0.10);
+                cliente.setPontos( cliente.getPontos() -10);
             }
+            cliente.setPontos(cliente.getPontos() + pontos.intValue());
             venda.setCliente(cliente);
             getRegistroDao().registrarVenda(venda);
+
             produto = null;
             cliente = null;
             listaItens = null;
