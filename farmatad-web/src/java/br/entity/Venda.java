@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Venda implements Serializable{
+public class Venda implements Serializable {
 
     private int idVenda;
     private Date data;
@@ -14,6 +14,7 @@ public class Venda implements Serializable{
     private Cliente cliente;
     private Funcionario funcionario;
     private List<ItemVenda> listaItensVenda = null;
+    private Double subtotal;
 
     public void adicionaItem(Produto produto, int qtd, String pPagto) {
         ItemVenda iv = new ItemVenda();
@@ -85,6 +86,20 @@ public class Venda implements Serializable{
     public void setIdVenda(int idVenda) {
         this.idVenda = idVenda;
     }
-    
+
+    public double getSubTotal() {
+        if (subtotal == null) {
+            double total = 0d;
+            for (ItemVenda itemVenda : listaItensVenda) {
+                total += itemVenda.getValorVenda()*itemVenda.getQuantidade();
+            }
+            subtotal = total;
+        }
+        return subtotal;
+    }
+
+    public double getTotal() {
+        return getSubTotal() - getDesconto();
+    }
 }
  
