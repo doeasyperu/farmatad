@@ -5,17 +5,22 @@
 package br.com.controller;
 
 import br.com.dao.Conexao;
+import br.com.dao.RelatorioDao;
+import br.entity.Cliente;
+import br.entity.Venda;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.StateManager;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,6 +34,10 @@ import net.sf.jasperreports.engine.JasperReport;
 @ManagedBean(name = "RelatorioController")
 @SessionScoped
 public class RelatorioController implements Serializable {
+
+    private List<Venda> listaVenda;
+    private Venda venda;
+    private String idvenda;
 
     /** Creates a new instance of RelatorioController */
     public RelatorioController() {
@@ -55,7 +64,7 @@ public class RelatorioController implements Serializable {
                 out = response.getOutputStream();
                 out.write(pdf);
                 StateManager stateManager = (StateManager) fc.getApplication().getStateManager();
-                stateManager.saveSerializedView(fc);
+                stateManager.saveView(fc);
             } catch (IOException ex) {
                 Logger.getLogger(RelatorioController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -67,5 +76,77 @@ public class RelatorioController implements Serializable {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public List<Venda> getListaVenda() {
+        if (listaVenda == null) {
+            listaVenda = new ArrayList<Venda>();
+        }
+        return listaVenda;
+    }
+
+    public void setListaVenda(List<Venda> listaVenda) {
+        this.listaVenda = listaVenda;
+    }
+
+    public Venda getVenda() {
+        if (venda == null) {
+            venda = new Venda();
+            venda.setCliente(new Cliente());
+
+        }
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    public String getIdvenda() {
+
+        return idvenda;
+    }
+
+    public void setIdvenda(String idvenda) {
+        this.idvenda = idvenda;
+    }
+
+    public String pesquisarNotas() {
+        boolean cpf = venda.getCliente() == null
+                || venda.getCliente().getCpf().equals("");
+        boolean data = venda.getData() == null;
+        boolean codigo = idvenda == null || idvenda.equals("");
+        if (cpf && data && codigo) {
+            FacesMessage fm = new FacesMessage();
+            fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+            String msg = "Preencha algum critério de pesquisa";
+            fm.setSummary(msg);
+            fm.setDetail(msg);
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        } else {
+            if (!idvenda.equals("")) {
+                venda.setIdVenda(new Integer(idvenda));
+            }
+            RelatorioDao dao = new RelatorioDao();
+            listaVenda = dao.pesquisarVenda(venda);
+        }
+        return null;
+    }
+
+    public String mostrarNotaFiscal() {
+
+        RelatorioDao dao = new RelatorioDao();
+        venda.setListaItensVenda(dao.listarItems(venda));
+
+        return "notaFiscal";
+    }
+
+    public String cancelar() {
+
+        venda = null;
+        listaVenda = null;
+        idvenda = "";
+        return "/restrito/index";
     }
 }

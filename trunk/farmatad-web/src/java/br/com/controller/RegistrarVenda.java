@@ -245,12 +245,13 @@ public class RegistrarVenda implements Serializable {
             for (Produto p : listaCompras) {
                 ItemVenda iv = new ItemVenda();
                 iv.setProduto(p);
+                iv.setValorVenda(p.getValorVenda());
                 listaItens.add(iv);
             }
             venda.setListaItensVenda(listaItens);
             venda.setFuncionario(f);
             if (cliente.getPontos() > 10) {
-                venda.setDesconto(0.10);
+                venda.setDesconto(total * 0.10);
                 cliente.setPontos( cliente.getPontos() -10);
             }
             cliente.setPontos(cliente.getPontos() + pontos.intValue());
@@ -265,8 +266,18 @@ public class RegistrarVenda implements Serializable {
             listaProdutos = null;
             venda = null;
             total = 0d;
-            venda = new Venda();
+            venda = null;
         }
         return null;
+    }
+
+    public String cancelarVenda(){
+        produto = null;
+        cliente = null;
+        listaCliente = null;
+        listaProdutos = null;
+        venda = null;
+        total = 0D;
+        return "/restrito/index";
     }
 }
