@@ -36,7 +36,10 @@
                     </p:panel>
                     <p:panel header="Registros de entradas" >
                         <h:commandButton action="/restrito/Entrada" value="#{bundlePrincipal.Entrada}"/>
+                    </p:panel>
+                    <p:panel header="Registros de vendas" >
                         <h:commandButton action="/restrito/Vendas" value="Vendas"/>
+                        <h:commandButton action="/restrito/emitirNota" value="Emitir nota fiscal" />
                     </p:panel>
                     <p:panel header="Relatório" >
                         <h:commandButton action="#{RelatorioController.gerarRelatorio}" value="Relatório"/>
