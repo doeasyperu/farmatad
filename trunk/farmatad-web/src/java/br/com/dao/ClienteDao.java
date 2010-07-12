@@ -194,8 +194,8 @@ public class ClienteDao extends Dao {
                 getCliente().setAtivo(getResultSet().getBoolean("f5")); //f5
                 getCliente().setCpf(getResultSet().getString("f7")); //f7
                 getCliente().setRg(getResultSet().getString("f8")); //f8
-                getCliente().setPontos(getResultSet().getInt("f10")); //f10
                 getCliente().setIdCliente(getResultSet().getInt("f9"));//f9
+                getCliente().setPontos(getResultSet().getInt("f10")); //f10
                 System.out.println("idcliente em select " + getCliente().getIdCliente());
             }
             return getCliente();
