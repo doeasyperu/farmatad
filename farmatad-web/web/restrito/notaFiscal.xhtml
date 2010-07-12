@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Nota fiscal</title>
+    </h:head>
+    <h:body>
+        <p:panel header="Nota fiscal">
+            <h:panelGrid columns="6">
+                <h:outputText value="Cliente:" />
+                <h:outputText value="#{RelatorioController.venda.cliente.nome}" />
+                <h:outputText value="CPF:" />
+                <h:outputText value="#{RelatorioController.venda.cliente.cpf}" />
+                <h:outputText value=" " />
+                <h:outputText value=" " />
+
+            </h:panelGrid>
+            <p:dataTable value="#{RelatorioController.venda.listaItensVenda}"
+                         var="itens" emptyMessage="Nada encontrado"
+                         paginator="false">
+                <p:column>
+                    <f:facet name="header">Produto</f:facet>
+                    <h:outputText value="#{itens.produto.nome}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Laboratório</f:facet>
+                    <h:outputText value="#{itens.produto.laboratorio}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Quantidade</f:facet>
+                    <h:outputText value="#{itens.quantidade}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Valor produto</f:facet>
+                    <h:outputText value="#{itens.valorVenda}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Total produto</f:facet>
+                    <h:outputText value="#{itens.valorVenda * itens.quantidade}"/>
+                </p:column>
+            </p:dataTable>
+            <h:panelGrid columns="2" >
+                <h:outputText value="Data:" />
+                <h:outputText value="#{RelatorioController.venda.data}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <h:outputText value="Subtotal" />
+                <h:outputText value="#{RelatorioController.venda.subTotal}" />
+
+                <h:outputText value="Desconto:" />
+                <h:outputText value="#{RelatorioController.venda.desconto}" />
+                <h:outputText value="Total:" />
+                <h:outputText value="#{RelatorioController.venda.total}" />
+            </h:panelGrid>
+            <h:form>
+                <h:commandButton value="Cancelar" action="#{RelatorioController.cancelar}" />
+            </h:form>
+        </p:panel>
+    </h:body>
+</html>
