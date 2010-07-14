@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nota_fiscal_subreport1" language="groovy" pageWidth="555" pageHeight="200" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="VENDA" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="RETORNO" class="java.lang.Double" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     item_venda.`quantidade` AS item_venda_quantidade,
+     item_venda.`valor_venda` AS item_venda_valor_venda,
+     produto.`nome` AS produto_nome,
+     produto.`laboratorio` AS produto_laboratorio,
+     (item_venda.`quantidade`* item_venda.`valor_venda`) AS Mult
+FROM
+     `produto` produto INNER JOIN `item_venda` item_venda ON produto.`idProduto` = item_venda.`idProduto`WHERE item_Venda.idvenda = $P{VENDA}]]>
+	</queryString>
+	<field name="item_venda_quantidade" class="java.lang.Integer"/>
+	<field name="item_venda_valor_venda" class="java.lang.Double"/>
+	<field name="produto_nome" class="java.lang.String"/>
+	<field name="produto_laboratorio" class="java.lang.String"/>
+	<field name="Mult" class="java.lang.Double"/>
+	<variable name="contatdor" class="java.lang.Number" calculation="Count">
+		<variableExpression><![CDATA[$V{REPORT_COUNT}]]></variableExpression>
+	</variable>
+	<variable name="soma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{item_venda_valor_venda}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0.0)]]></initialValueExpression>
+	</variable>
+	<variable name="resultado" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{soma}.doubleValue() - $P{RETORNO}.doubleValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="29">
+			<staticText>
+				<reportElement x="122" y="5" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="232" y="5" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="5" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Qtd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="5" width="45" height="20"/>
+				<textElement/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="5" width="57" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total linha]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<rectangle>
+				<reportElement x="2" y="0" width="554" height="27" backcolor="#CCCCFF">
+					<printWhenExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="122" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{produto_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="2" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{produto_laboratorio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{contatdor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="498" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{Mult}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="2" width="48" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{item_venda_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="0" width="45" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{item_venda_valor_venda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="84">
+			<textField>
+				<reportElement x="454" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{soma}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="454" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{RETORNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="40" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{resultado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="402" y="0" width="50" height="20"/>
+				<textElement/>
+				<text><![CDATA[SubTotal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="20" width="47" height="20"/>
+				<textElement/>
+				<text><![CDATA[Desconto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="40" width="35" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>
