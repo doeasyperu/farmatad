@@ -8,15 +8,15 @@
         <title>Farmatads</title>
 
     </h:head>
-    <h:body styleClass="yui-skin-sam" >
-        <p:layout fullPage="true" style="width: 100%; height: 100%;" >
+    <h:body styleClass="yui-skin-sam"  style="width: 765px; height: 545px; overflow: auto; position: absolute;">
+        <p:layout fullPage="true" style="position: relative" >
             <p:layoutUnit position="top" height="50" header="Página principal" >
             </p:layoutUnit>
             <p:layoutUnit position="left" width="200">
                 <h:graphicImage value="/resources/logo_farmatads.png" width="174" height="94" />
 
             </p:layoutUnit>
-            <p:layoutUnit position="center" header="Menu">
+            <p:layoutUnit position="center" header="Menu" scrollable="true">
                 <h:form>
                     <p:panel header="Cliente" >
                         <h:commandButton action="/restrito/cliente/List" value="#{bundlePrincipal.Cliente_Listar}"/>

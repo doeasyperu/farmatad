@@ -4,22 +4,22 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.prime.com.tr/ui"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Emitir nota fiscal</title>
-    </h:head>
-    <h:body>
-        <p:panel header="Pesquisa de notas" widgetVar="painel">
+<ui:composition template="/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="title">
+        <h:outputText value="Pesquisa de notas"></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+        <h:panelGroup layout="block" id="painel">
 
             <p:messages />
             <h:form prependId="false">
                 <h:panelGrid columns="2" >
                     <h:outputText value="Codigo da venda:" />
-                    <h:inputText value="#{RelatorioController.idvenda}" 
+                    <h:inputText value="#{RelatorioController.idvenda}"
                                  />
                     <h:outputText value="CPF:" />
                     <h:inputText value="#{RelatorioController.venda.cliente.cpf}" maxlength="13"/>
@@ -56,7 +56,7 @@ and open the template in the editor.
                         <h:outputText value="#{vendas.cliente.cpf}" />
                     </p:column>
                     <p:column>
-                        <h:commandButton value="Emitir nota" action="#{RelatorioController.mostrarNotaFiscal}" >
+                        <h:commandButton value="Visualizar nota" action="#{RelatorioController.mostrarNotaFiscal}" >
                             <f:setPropertyActionListener value="#{vendas}" target="#{RelatorioController.venda}" />
                         </h:commandButton>
                     </p:column>
@@ -64,8 +64,9 @@ and open the template in the editor.
             </h:form>
 
             <h:form>
+                
                 <h:commandButton value="Cancelar" action="#{RelatorioController.cancelar}" />
             </h:form>
-        </p:panel>
-    </h:body>
-</html>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<ui:composition template="/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="title">
+        <h:outputText value=" "></h:outputText>
+    </ui:define>
+    <ui:define name="body">
+        Venda efetuada com sucesso!
+        <br />
+        Pontos acumulados pelo o cliente: <h:outputText value="#{RelatorioController.venda.cliente.pontos}" />
+        <h:form>
+            <h:commandButton value="Emitir nota" action="#{RelatorioController.emitirNota}">
+                <f:setPropertyActionListener value="#{registrarVenda.venda}" target="#{RelatorioController.venda}" />
+            </h:commandButton>
+            <h:commandButton value="Nova venda" action="#{registrarVenda.novaVenda}" />
+        </h:form>
+    </ui:define>
