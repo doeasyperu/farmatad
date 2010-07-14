@@ -9,6 +9,7 @@ public class Produto implements Serializable {
     private String descricao;
     private String laboratorio;
     private Integer quantidade = new Integer(0);
+    private Integer quantidade2 = new Integer(0);
     private Double valorVenda = new Double(0d);
 
     public Produto(int idProduto) {
@@ -42,19 +43,19 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-    public int getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 
-    public double getValorVenda() {
+    public Double getValorVenda() {
         return valorVenda;
     }
 
-    public void setValorVenda(double valorVenda) {
+    public void setValorVenda(Double valorVenda) {
         this.valorVenda = valorVenda;
     }
 
@@ -65,6 +66,16 @@ public class Produto implements Serializable {
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
     }
+
+    public Integer getQuantidade2() {
+        return quantidade2;
+    }
+
+    public void setQuantidade2(Integer quantidade2) {
+        this.quantidade2 = quantidade2;
+    }
+
+    
 
     @Override
     public boolean equals(Object obj) {

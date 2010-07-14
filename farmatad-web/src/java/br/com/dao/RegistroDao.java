@@ -80,7 +80,7 @@ public class RegistroDao {
         }
     }
 
-    public int registrarVenda(Venda venda) {
+    public Venda registrarVenda(Venda venda) {
         try {
 //            for (ItemVenda iv : venda.getListaItensVenda()) {
 //                setSql("insert into item_venda");
@@ -93,10 +93,7 @@ public class RegistroDao {
             getPreparedStatement().setInt(3, venda.getCliente().getIdCliente());
             getPreparedStatement().setInt(4, venda.getFuncionario().getIdFuncionario());
             getPreparedStatement().executeUpdate();
-
-            setSql("select max(idvenda) from venda");
-            setPreparedStatement(getConexao().getConnection().prepareStatement(getSql()));
-            setResultSet(getPreparedStatement().executeQuery());
+            setResultSet(getPreparedStatement().getGeneratedKeys());
             while (getResultSet().next()) {
                 venda.setIdVenda(getResultSet().getInt(1));
             }
@@ -109,23 +106,26 @@ public class RegistroDao {
                 getPreparedStatement().setInt(3, iv.getProduto().getQuantidade());
                 getPreparedStatement().setDouble(4, iv.getProduto().getValorVenda());
                 getPreparedStatement().executeUpdate();
+                ResultSet key = getPreparedStatement().getGeneratedKeys();
+                while (key.next()){
+                    iv.setIdVenda(key.getInt(1));
+                }
                 Produto p = new Produto(iv.getProduto().getIdProduto());
                 getProdutoDao().setProduto(p);
                 p = getProdutoDao().select();
                 p.setQuantidade(p.getQuantidade() - iv.getProduto().getQuantidade());
                 getProdutoDao().setProduto(p);
                 getProdutoDao().update();
-
             }
             ClienteDao clienteDao = new ClienteDao();
             clienteDao.setCliente(venda.getCliente());
             clienteDao.update();
 
-            return 1;
+            return venda;
 
         } catch (SQLException ex) {
             Logger.getLogger(RegistroDao.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+            return null;
         }
         // return -3;
     }
