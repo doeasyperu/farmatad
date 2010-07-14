@@ -288,17 +288,22 @@ public class RegistrarVenda implements Serializable {
     }
 
     public String novaVenda(){
-        cancelarVenda();
+        limparCampos();
         return "/restrito/Vendas";
     }
 
     public String cancelarVenda() {
+        limparCampos();
+        return "/restrito/index";
+    }
+
+    private void limparCampos() {
         produto = null;
         cliente = null;
         listaCliente = null;
         listaProdutos = null;
+        listaCompras = null;
         venda = null;
         total = 0D;
-        return "/restrito/index";
     }
 }
