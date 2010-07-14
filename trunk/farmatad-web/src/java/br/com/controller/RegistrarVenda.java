@@ -45,9 +45,24 @@ public class RegistrarVenda implements Serializable {
     private boolean pesquisaCliente = false;
     private boolean pesquisaProduto = false;
     private double total = 0d;
+    private double desconto = 0D;
 
     private RegistroDao getRegistroDao() {
         return registroDao;
+    }
+
+    public double getDesconto() {
+        if (getCliente().getPontos() != 0
+                && getCliente().getPontos() >= 10) {
+            desconto = getTotal() * 0.1;
+        } else {
+            desconto = 0D;
+        }
+        return desconto;
+    }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
     }
 
     public double getTotal() {
@@ -167,22 +182,27 @@ public class RegistrarVenda implements Serializable {
             mensagem = "Só tem " + p1.getQuantidade() + " em estoque.";
         }
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, sumario, mensagem);
-        if (p1.getQuantidade() < produto.getQuantidade() || p1.getQuantidade() == 0) {
+        if (p1.getQuantidade() < produto.getQuantidade2() || p1.getQuantidade() == 0) {
             fc.addMessage("formVendas:produtosel", fm);
             return null;
-        } else if (p1.getQuantidade() >= produto.getQuantidade() && p1.getQuantidade() > 0) {
+        } else if (produto.getQuantidade2().intValue() == 0) {
+            sumario = "Produto preenchido com 0(zero)";
+            mensagem = sumario;
+            fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, sumario, mensagem);
+            fc.addMessage("formVendas:produtosel", fm);
+        } else if (p1.getQuantidade() >= produto.getQuantidade2() && p1.getQuantidade() > 0) {
             for (int index = 0; index < listaCompras.size(); index++) {
                 Produto p = new Produto();
                 p = listaCompras.get(index);
                 if (p.getIdProduto() == produto.getIdProduto()) {
-                    if (p1.getQuantidade() < (p.getQuantidade() + produto.getQuantidade())) {
+                    if (p1.getQuantidade() < (p.getQuantidade2() + produto.getQuantidade2())) {
                         fc.addMessage("formVendas:produtosel", fm);
-                    } else if (p1.getQuantidade() >= (p.getQuantidade() + produto.getQuantidade())) {
+                    } else if (p1.getQuantidade2() >= (p.getQuantidade2() + produto.getQuantidade2())) {
                         produto.setQuantidade(p.getQuantidade() + produto.getQuantidade());
-                        total -= p.getQuantidade() * p.getValorVenda();
+                        total -= p.getQuantidade2() * p.getValorVenda();
 
                         listaCompras.set(index, produto);
-                        total += produto.getQuantidade() * produto.getValorVenda();
+                        total += produto.getQuantidade2() * produto.getValorVenda();
                         produto = new Produto(-1);
                         listaProdutos = null;
                     }
@@ -190,7 +210,8 @@ public class RegistrarVenda implements Serializable {
                 }
             }
             listaCompras.add(produto);
-            total += produto.getValorVenda() * produto.getQuantidade();
+            total += produto.getValorVenda() * produto.getQuantidade2();
+            getDesconto();
             produto = null;
             listaProdutos = null;
 
@@ -200,7 +221,8 @@ public class RegistrarVenda implements Serializable {
 
     public String removerProduto() {
         listaCompras.remove(produto);
-        total = total - (produto.getValorVenda() * produto.getQuantidade());
+        total = total - (produto.getValorVenda() * produto.getQuantidade2());
+        getDesconto();
         produto = new Produto(-1);
         return null;
     }
@@ -240,10 +262,11 @@ public class RegistrarVenda implements Serializable {
             fc.addMessage("formVendas:clientessel", m);
             return null;
         } else {
-            Double pontos = Math.ceil(total/ 10);
+            Double pontos = Math.ceil(total / 10);
             List<ItemVenda> listaItens = new ArrayList<ItemVenda>();
             for (Produto p : listaCompras) {
                 ItemVenda iv = new ItemVenda();
+                p.setQuantidade(p.getQuantidade2());
                 iv.setProduto(p);
                 iv.setValorVenda(p.getValorVenda());
                 listaItens.add(iv);
@@ -252,26 +275,24 @@ public class RegistrarVenda implements Serializable {
             venda.setFuncionario(f);
             if (cliente.getPontos() > 10) {
                 venda.setDesconto(total * 0.10);
-                cliente.setPontos( cliente.getPontos() -10);
+                cliente.setPontos(cliente.getPontos() - 10);
             }
             cliente.setPontos(cliente.getPontos() + pontos.intValue());
             venda.setCliente(cliente);
-            getRegistroDao().registrarVenda(venda);
-
-            produto = null;
-            cliente = null;
-            listaItens = null;
-            listaCliente = null;
-            listaCompras = new ArrayList<Produto>();
-            listaProdutos = null;
-            venda = null;
-            total = 0d;
-            venda = null;
+            venda = getRegistroDao().registrarVenda(venda);
+            if (venda != null) {
+                return "/restrito/vendaEfetuada";
+            }
         }
         return null;
     }
 
-    public String cancelarVenda(){
+    public String novaVenda(){
+        cancelarVenda();
+        return "/restrito/Vendas";
+    }
+
+    public String cancelarVenda() {
         produto = null;
         cliente = null;
         listaCliente = null;

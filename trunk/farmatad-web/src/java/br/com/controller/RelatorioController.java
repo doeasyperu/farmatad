@@ -11,7 +11,9 @@ import br.entity.Venda;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -148,5 +150,42 @@ public class RelatorioController implements Serializable {
         listaVenda = null;
         idvenda = "";
         return "/restrito/index";
+    }
+
+    public String emitirNota() {
+        try {
+            Conexao c = Conexao.getInstance();
+            String path = FacesContext.getCurrentInstance().
+                    getExternalContext().getRealPath("/resources/nota_fiscal.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport(path);
+            Map<String, Integer> attr = new HashMap<String, Integer>();
+            attr.put("IDVENDA", new Integer(venda.getIdVenda()));
+            JasperPrint rel = JasperFillManager.fillReport(jr, attr, c.getConnection());
+            byte[] pdf = JasperExportManager.exportReportToPdf(rel);
+            final FacesContext fc = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+            response.setContentType("application/pdf");
+            response.setContentLength(pdf.length);
+            response.setHeader("Content-disposition", "attachment;filename=notaFiscal.pdf");
+
+            response.setHeader("Cache-Control", "cache, must-revalidate");
+            response.setHeader("Pragma", "public");
+            ServletOutputStream out;
+            try {
+                out = response.getOutputStream();
+                out.write(pdf);
+                StateManager stateManager = (StateManager) fc.getApplication().getStateManager();
+                stateManager.saveView(fc);
+            } catch (IOException ex) {
+                Logger.getLogger(RelatorioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
+            fc.responseComplete();
+        } catch (Exception ex) {
+//            Logger.getLogger(RelatorioController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
