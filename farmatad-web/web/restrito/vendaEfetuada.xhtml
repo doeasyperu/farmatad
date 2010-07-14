@@ -5,6 +5,7 @@ and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <ui:composition template="/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
@@ -14,7 +15,9 @@ and open the template in the editor.
     <ui:define name="body">
         Venda efetuada com sucesso!
         <br />
-        Pontos acumulados pelo o cliente: <h:outputText value="#{RelatorioController.venda.cliente.pontos}" />
+        Código da venda: <h:outputText value="#{registrarVenda.venda.idVenda}" />
+        <br />
+        Pontos acumulados pelo o cliente: <h:outputText value="#{registrarVenda.venda.cliente.pontos}" />
         <h:form>
             <h:commandButton value="Emitir nota" action="#{RelatorioController.emitirNota}">
                 <f:setPropertyActionListener value="#{registrarVenda.venda}" target="#{RelatorioController.venda}" />
@@ -22,3 +25,4 @@ and open the template in the editor.
             <h:commandButton value="Nova venda" action="#{registrarVenda.novaVenda}" />
         </h:form>
     </ui:define>
+</ui:composition>
