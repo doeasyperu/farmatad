@@ -4,13 +4,15 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.prime.com.tr/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Vendas</title>
+<ui:composition template="/template.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="title">
+        <h:outputText value="Nota fiscal"></h:outputText>
+    </ui:define>
+    <ui:define name="anotherParams" >
         <script type="text/javascript">
             var input;
             function verificar(obj, qtd){
@@ -21,11 +23,12 @@ and open the template in the editor.
                 }
             }
         </script>
-    </h:head>
-    <h:body>
+    </ui:define>
+    <ui:define name="body">
+
         <p:dialog widgetVar="erroQtd" close="true" modal="true" fixedCenter="true"
                   >
-            <h:outputText value="Digite um valor menor ou igual a quantidade, seu asno!"
+            <h:outputText value="Digite um valor menor ou igual a quantidade."
                           />
         </p:dialog>
         <h:panelGroup layout="block" id="conteiner">
@@ -36,25 +39,17 @@ and open the template in the editor.
                     <h:commandButton value="buscar cliente" type="button" onclick="dialogoCliente.show();return false;" />
                     <p:message id="mensagensErro1" for="formVendas:clientessel"/>
 
+                    <h:outputLabel for="clientePontos" value="Pontos:" />
+                    <h:inputText id="clientePontos" readonly="true" disabled="true" value="#{registrarVenda.cliente.pontos}" />
+                    <h:outputText value=" " />
+                    <h:outputText value=" " />
+
                     <h:outputText id="produtosel" value="Produto:" />
                     <h:commandButton value="buscar produto" type="button" onclick="dialogProduto.show();" />
                     <p:message id="mensagensErro2" for="formVendas:produtosel"/>
-                    <!-- -->
-
-                    <h:outputLabel for="formaPagto" value="Forma de pagamento:" />
-                    <h:inputText id="formaPagto" value="#{registrarVenda.venda.formPagto}" maxlength="45"
-                                 required="true" requiredMessage="Preencha forma de pagamento"/>
-                    <p:message id="mensagensErro3" for="formVendas:formaPagto"/>
-                    <!-- -->
-
-                    <h:outputText value="Total:" />
-                    <h:inputText id="total" value="#{registrarVenda.total}" readonly="true"/>
-                    <h:commandButton value="registrar Venda" action="#{registrarVenda.registrarVenda}" />
-
-                    <h:commandButton value="Cancelar" immediate="true" action="#{registrarVenda.cancelarVenda}" />
+                    <h:outputText value=" " />
+                    <!-- -->                
                 </h:panelGrid>
-            </h:form>
-            <h:form>
                 <p:dataTable value="#{registrarVenda.listaCompras}" var="itemProduto" rows="10" id="TblProduto"
                              paginator="true" firstPageLinkLabel="#{bundlePrincipal.Primeiro}"
                              lastPageLinkLabel="#{bundlePrincipal.Ultimo}"
@@ -83,7 +78,7 @@ and open the template in the editor.
                         <f:facet name="header">
                             <h:outputText value="#{bundleProduto.ListProdutoTitle_quantidade}"/>
                         </f:facet>
-                        <h:outputText value="#{itemProduto.quantidade}"/>
+                        <h:outputText value="#{itemProduto.quantidade2}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
@@ -103,6 +98,53 @@ and open the template in the editor.
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
+                <h:panelGrid columns="2">
+                    <h:column>
+                        <h:panelGroup layout="block" style="width: 320px;" />
+                    </h:column>
+                    <h:column>
+                        <h:panelGroup layout="block" id="infVenda">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="SubTotal:&nbsp; R$" />
+                                <h:inputText id="subtotal" value="#{registrarVenda.total}" readonly="true" >
+                                    <f:convertNumber maxFractionDigits="2" />
+                                </h:inputText>
+
+                                <h:outputText value="Desconto: R$" />
+                                <h:inputText id="desconto" value="#{registrarVenda.desconto}" readonly="true" >
+                                    <f:convertNumber maxFractionDigits="2" />
+                                </h:inputText>
+
+                                <h:outputText value="Total: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R$"  escape="false"/>
+                                <h:inputText id="total" value="#{registrarVenda.total - registrarVenda.desconto}" readonly="true">
+                                    <f:convertNumber maxFractionDigits="2" />
+                                </h:inputText>
+                                <h:outputLabel for="formaPagto" value="Forma pgto:" />
+                                <h:panelGroup>
+                                    <h:selectOneMenu id="formaPagto" value="#{registrarVenda.venda.formPagto}"
+                                                     required="true" requiredMessage="Preencha forma de pagamento">
+                                        <f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+                                        <f:selectItem itemLabel="Cheque" itemValue="Cheque" />
+                                        <f:selectItem itemLabel="Cartão" itemValue="Cartão" />
+                                    </h:selectOneMenu>
+                                    <p:message id="mensagensErro3" for="formVendas:formaPagto"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                        </h:panelGroup>
+                    </h:column>
+                </h:panelGrid>
+                <!-- -->
+
+
+                <h:panelGroup>
+                    <h:panelGrid columns="2" >
+                        <h:commandButton value="registrar Venda" action="#{registrarVenda.registrarVenda}" />
+                        <h:commandButton value="Cancelar" immediate="true" action="#{registrarVenda.cancelarVenda}" />
+
+                        <h:commandButton value="Página inicial" immediate="true" action="#{registrarVenda.cancelarVenda}" />
+                    </h:panelGrid>
+                </h:panelGroup>
             </h:form>
         </h:panelGroup>
         <p:dialog widgetVar="dialogo" fixedCenter="true" height="150px"
@@ -137,12 +179,12 @@ and open the template in the editor.
                         <h:outputText value="#{itemProduto.laboratorio}" />
                     </p:column>
                     <p:column>
-                        <f:facet name="header" >Qtd</f:facet>
+                        <f:facet name="header" >Qtd Estoque</f:facet>
                         <h:outputText value="#{itemProduto.quantidade}" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">Qtd vendida</f:facet>
-                        <h:inputText value="#{itemProduto.quantidade}"
+                        <h:inputText value="#{itemProduto.quantidade2}"
                                      onkeyup="verificar(this, #{itemProduto.quantidade})" />
                     </p:column>
                     <p:column>
@@ -183,7 +225,7 @@ and open the template in the editor.
                     </p:column>
                     <p:column>
                         <f:facet name="header" > </f:facet>
-                        <p:commandButton value="Escolher" update="#{p:component('clientessel')}" onclick="dialogoCliente.hide();">
+                        <p:commandButton value="Escolher" update="conteiner" onclick="dialogoCliente.hide();">
                             <f:setPropertyActionListener target="#{registrarVenda.cliente}" value="#{itemCliente}" />
                         </p:commandButton>
                     </p:column>
@@ -224,5 +266,6 @@ and open the template in the editor.
             </h:form>
         </p:dialog>
 
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
+
