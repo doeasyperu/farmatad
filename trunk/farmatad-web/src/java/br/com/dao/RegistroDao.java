@@ -120,6 +120,7 @@ public class RegistroDao {
             ClienteDao clienteDao = new ClienteDao();
             clienteDao.setCliente(venda.getCliente());
             clienteDao.update();
+            venda.setCliente(clienteDao.getCliente());
 
             return venda;
 
