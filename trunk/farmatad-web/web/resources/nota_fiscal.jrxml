@@ -46,7 +46,9 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="IDVENDA" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="IDVENDA" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[8]]></defaultValueExpression>
+	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Documents and Settings\\marcio\\Meus documentos\\"]]></defaultValueExpression>
 	</parameter>
